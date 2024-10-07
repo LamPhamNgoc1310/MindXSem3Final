@@ -6,7 +6,9 @@ const movieRouter = express.Router();
 
 const storage = multer.memoryStorage();
 
+movieRouter.post('/create-movie', movieController.createMovie);
 movieRouter.get('/', movieController.getMovies);
-movieRouter.post('/', movieController.getMovies);
+movieRouter.put('/update-movie', movieController.updateMovie)
+movieRouter.delete('/delete-movie', movieController.deleteMovie);
 
 export default movieRouter

@@ -35,7 +35,6 @@ function Home() {
 
   const imageStyle = {
     width: "100%",
-    height: "auto",  
   };
   return (
     <div className="container">
