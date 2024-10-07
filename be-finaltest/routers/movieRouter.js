@@ -8,7 +8,8 @@ const storage = multer.memoryStorage();
 
 movieRouter.post('/create-movie', movieController.createMovie);
 movieRouter.get('/', movieController.getMovies);
-movieRouter.put('/update-movie', movieController.updateMovie)
+movieRouter.put('/update-movie/:name', movieController.updateMovie)
 movieRouter.delete('/delete-movie', movieController.deleteMovie);
+movieRouter.get('/find', movieController.findByname);
 
 export default movieRouter

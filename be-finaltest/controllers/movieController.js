@@ -22,29 +22,15 @@ const movieController = {
     },
 
     updateMovie: async(req, res) => {
-        const {name, newName, newID, newTime, newYear,newImage,newIntroduce} = req.body
+        const {name} = req.params;
+        const {time, year, image, introduce} = req.body
 
         try {
-            const movie = await MovieModel.findOne({name})
-            if(!movie) {
-                res.status(404).send({message: 'movie not found'})
-            }
-            
-            if (newName) {
-                const existingMovie = await MovieModel.findOne({name: newName});
-                if(existingMovie) {
-                    res.status(400).send({message: 'movie name in use'})
-                }
-                movie.name = newName;
-            }
-            if(newID) movie.ID = newID;
-            if(newTime) movie.ID = newTime;
-            if(newYear) movie.ID = newYear;
-            if(newImage) movie.ID = newImage;
-            if(newIntroduce) movie.ID = newIntroduce;
+            const updatedMovie = await MovieModel.findOneAndUpdate({name}, {time, year, image, introduce}, {new: true})
 
-            const updatedMovie = await movie.save();
-
+            if(!updatedMovie){
+                res.status(400).send('Movie not found')
+            }
             res.status(200).send(updatedMovie)
         } catch (error) {
             res.status(500).json({message: error.message})
@@ -63,6 +49,23 @@ const movieController = {
             res.status(200).send("delete",movie)
         } catch (error) {
             res.status(500).json({message: error.message})
+        }
+    },
+
+    findByname: async(req, res) => {
+        const {name} = req.query;
+        if (!name) {
+            return res.status(400).send({ message: 'Requires query' }); // Handle missing name
+        }
+
+        try {
+            const movie = await MovieModel.find({name});
+            if(!movie) {
+                return res.status(404).send({message: 'Movie not found'});
+            }
+            res.status(200).send(movie);
+        } catch(error) {
+            res.status(500).json({ message: error.message });
         }
     }
 
