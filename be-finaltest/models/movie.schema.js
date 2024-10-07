@@ -9,6 +9,6 @@ const movieSchema = new mongoose.Schema({
     introduce: String
 })
 
-const MovieModel = mongoose.model('movies', movieSchema, 'data');
+const MovieModel = mongoose.model('movies', movieSchema);
 
 export default MovieModel;
