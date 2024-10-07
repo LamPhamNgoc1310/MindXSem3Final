@@ -7,17 +7,22 @@ import { useEffect, useState } from "react";
 
 function Home() {
 
+
     const [movieData, setMovieData] = useState([])
     const fetchData = async () => {
+      try {
         const response = await axios.get('http://localhost:8080/movies')
-        setMovieData(response.data)
+        setMovieData(response.data) // set movie data array
+      } catch (error) {
+        console.error('Error: ', error)
+      }
     }
 
+    // call api only once when component mounts
     useEffect(() => {
         fetchData(); 
         console.log(movieData);
-        // Fetch data when the component mounts
-    }, []);
+    },[]);
 
   const contentStyle = {
     display: "flex",
@@ -25,12 +30,12 @@ function Home() {
     alignItem: 'center',
     flexDirection: "column",
     height: "350px",
+    
   };
 
   const imageStyle = {
     width: "100%",
-    height: "240px",      // Maintain aspect ratio
-    objectFit: "cover",  // Prevent image stretching
+    height: "auto",  
   };
   return (
     <div className="container">
@@ -57,10 +62,13 @@ function Home() {
               draggable={true}
               slidesToShow={4}
               slidesToScroll={1}
-            >
+            > 
+              {/* mapping movie data */}
               {movieData.map((movie, index) => (
                 <div className="option" key={index} style={contentStyle}>
-                  <img style={imageStyle} src={movie.image} />
+                  <div className="movie-image">
+                    <img style={imageStyle} src={movie.image} />
+                  </div>
                   <p className="name-movie">{movie.name}</p>
                   <p className="time">
                     {movie.time} min {movie.year}

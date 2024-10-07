@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 const movieSchema = new mongoose.Schema({
+    ID: Number,
     name: String,
     time: Number,
     year: Number,
@@ -8,6 +9,6 @@ const movieSchema = new mongoose.Schema({
     introduce: String
 })
 
-const MovieModel = mongoose.model('movies', movieSchema);
+const MovieModel = mongoose.model('movies', movieSchema, 'data');
 
 export default MovieModel;

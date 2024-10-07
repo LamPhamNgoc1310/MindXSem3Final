@@ -7,6 +7,7 @@ const movieRouter = express.Router();
 const storage = multer.memoryStorage();
 
 movieRouter.get('/', movieController.getMovies);
-
+movieRouter.post('/', movieController.getMovies);
+movieRouter.get('/login', movieController.login);
 
 export default movieRouter
